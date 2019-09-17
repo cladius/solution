@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Score 40 for Semi Final 2
+ * Semi Final 2
  * 
  * @author cladius_fernando
  *
