@@ -152,7 +152,7 @@ Also, I optimized the above comparison by first sorting the row/column summation
 
 Submission Outcome: 100 points (finally)
 
-## Moral of the story:
+## Moral of the story
 There is a reason why I went through all of my failed versions before getting to the final solution. I wanted to highlight that more often than not failures accompany us on the road to victory. I don't think that I am smarter or more talented than my peers who couldn't solve this problem. But I will tell you this, the only reason why I did finally solve it, is because I refused to give up. I like how we usually say "find a solution" as opposed to "create a solution". Because the former phrase assumes that a solution indeed exists; all we have to do is go and find it! And one of the reasons why I kept striving was because in the statistics tab on the results page I could see that there were several others who had obtained a score of 100. I said to myself, "Hmm, if so many others can do it, then maybe I can to."
 
 Some other misc learning points for us (including me):
