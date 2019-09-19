@@ -143,7 +143,7 @@ At this point I had no idea how to further refine my logic. So I felt that I was
 
 Thankfully, I had a kid visiting me at home at that time and I asked her to come up with a few different random test-cases manually for me. I had to explain to this college kid what a matrix was. Let's observe 1 minute of silence for our education system. Moving on.
 
-In some of the test-cases that she came up with, she used a lot of zeroes for the row/column-summations. This led me to the discovery of the very simply yet elegant solution that is Version 8.
+In some of the test-cases that she came up with, she used a lot of zeroes for the row/column-summations. This led me to the discovery of the very simple yet elegant solution that is Version 8. Following are the constraints that I checked for:
 
 * max_possible_row = column_count - empty_columns (Version 6 deja-vous)
 i.e. the maximum possible row-summation value = total number of columns - count(column-summations which are zero)
