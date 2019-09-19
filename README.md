@@ -121,7 +121,7 @@ Collections.sort(rows, Collections.reverseOrder()); //Ooooh
 ```
 * Used a ListIterator
 
-I did modify some portion of the logic. For the life of me, I am not sure what made me make [these changes](../../solution/commit/e62975a6887cec3994b516dfa3ec4cfe9bfc119d). But it increased my score by 30 points. Woohoo!
+I did modify some portion of the logic. For the life of me, I am not sure what made me make [these changes](../../commit/e62975a6887cec3994b516dfa3ec4cfe9bfc119d). But it increased my score by 30 points. Woohoo!
 
 Submission Outcome: 40 points out of 100
 
