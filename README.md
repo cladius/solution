@@ -1,7 +1,13 @@
 # Code Gladiators Semi Final 2019 Problem #2's Solution
 
 ## The Problem
-The actual problem could be concisely described as checking the feasibility of creation of a [binary matrix](https://en.wikipedia.org/wiki/Logical_matrix) when the summation values for each row and column in the matrix are provided. 
+Sadly, the original problem has been lost in the annals of time. Or to put it less dramatically, I didn't have enough sense at the time to save it somewhere.  But fear not, we have the next best thing - my own description of the same.
+
+Consider a matrix with 'n' rows and 'm' columns. Each cell in this matrix is occupied with either the value of 0 or 1. Now, if we add up the values in the cells of a column, we obtain what I hereafter refer to as a **column-summation**. And similarly, if we add up the values in the cells of a row, we obtain the **row-summation**. The problem is to figure out if it is possible to create a matrix with the following constraints:
+* Given value of 'n' rows and 'm' columns
+* Cell arrangements that lead to a specific list of column-summations and row-summations 
+
+Alternatively, the problem could be succinctly described as checking the feasibility of creation of a [binary matrix](https://en.wikipedia.org/wiki/Logical_matrix) when the summation values for each row and column in the matrix are provided. 
 
 Consider the following binary matrix (with added column and row summations in bold)
 
