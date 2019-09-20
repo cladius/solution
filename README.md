@@ -7,6 +7,8 @@ Consider a matrix with 'n' rows and 'm' columns. Each cell in this matrix is occ
 * Given value of 'n' rows and 'm' columns
 * Cell arrangements that lead to a specific list of column-summations and row-summations 
 
+Eg: So if I request you to create a matrix with 3 rows and 4 columns such that each cell has either 0 or 1 in it AND the row-summations are 4, 2 and 1 AND the column-summations are 3, 2, 1 and 1; would you be able to create it? YES or NO? (Note: For these values, the answer is YES, as shown below.)
+
 Alternatively, the problem could be succinctly described as checking the feasibility of creation of a [binary matrix](https://en.wikipedia.org/wiki/Logical_matrix) when the summation values for each row and column in the matrix are provided. 
 
 Consider the following binary matrix (with added column and row summations in bold)
