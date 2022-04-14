@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Score 40 for Semi Final 2
+ * Score 0 -Semi Final 2
  * 
  * @author cladius_fernando
  *
@@ -89,8 +89,6 @@ public class CandidateCode {
 			System.out.println(columns);
 		}
 
-		boolean possible = true;
-
 		int minimize_result = 0;
 
 		minimize_result = minimize(rows, columns);
@@ -99,105 +97,15 @@ public class CandidateCode {
 			return false;
 		}
 
+		/*
 		// Transpose and minimize
 		minimize_result = minimize(columns, rows);
 		// If minimize_result !=0, then some error has occurred.
 		if (minimize_result != 0) {
 			return false;
-		}
+		}*/
 		
-		//Solved owing to simplistic matrix
-		if (rows.size() == 0 || rows.size() == 1) {
-			return true;
-		}
-
-		/*
-		if (DEBUG)
-			System.out.println(rows.toString() + " , " + columns.toString());
-
-		List<Integer> columnSums = new ArrayList<>(column_count);
-		
-		for(index = 0; index < column_count; index++) {
-			columnSums.add(row_count);
-		}
-		
-		int column_index, difference;
-		for(index = 0; index < row_count; index++) {
-			difference = column_count - rows.get(index);
-			column_index = 0;
-			
-			for(column_index = (column_count - difference); column_index < column_count; column_index++) {
-				columnSums.set(column_index, columnSums.get(column_index) - 1);
-			}
-		}
-		
-		if(DEBUG)
-			System.out.println(columnSums.toString());
-
-		// Check if the initial configuration matches the column count
-		if (columns.equals(columnSums)) {
-			return true;
-		}
-
-		possible = compareDesiredAndActual(columns, columnSums, row_count, column_count);
-		
-		if(!possible)
-			return false;
-
-			// Shuffle each row from top to bottom and after each shift check the column
-			// count
-			// shuffle();
-//				possible = false;
- * 
- * 
- */
 		return true;
-	}
-
-	private static boolean compareDesiredAndActual(List<Integer> columns, List<Integer> columnSums, int row_count,
-			int column_count) {
-		int column_index = 0;
-
-		int total_difference = 0;
-		int difference = 0;
-		for (; column_index < column_count; column_index++) {
-			difference = columnSums.get(column_index) - columns.get(column_index);
-			if (difference > 0) {
-				total_difference += difference;
-			}
-		}
-
-		if (total_difference > row_count)
-			return false;
-		else
-			return true;
-	}
-
-	private static List<Integer> calculateColumnSum(boolean[][] matrix, int row_count, int column_count) {
-		List<Integer> columnSums = new ArrayList<>();
-
-		int row_index, column_index, column_sum;
-		for (column_index = 0; column_index < column_count; column_index++) {
-			column_sum = 0;
-			for (row_index = 0; row_index < row_count; row_index++) {
-				if (matrix[row_index][column_index])
-					column_sum++;
-			}
-			columnSums.add(column_sum);
-		}
-
-		return columnSums;
-	}
-
-	private static void printMatrix(boolean[][] matrix, int row_count, int column_count) {
-		int row_index, column_index;
-		for (row_index = 0; row_index < row_count; row_index++) {
-			System.out.println();
-			for (column_index = 0; column_index < column_count; column_index++) {
-				System.out.print(matrix[row_index][column_index] + " ");
-			}
-		}
-		System.out.println();
 	}
 
 	private static int minimize(List<Integer> rows, List<Integer> columns) {
@@ -210,49 +118,106 @@ public class CandidateCode {
 		int row, column;
 
 		int full_rows = 0;
+		int empty_columns = 0;
 		int empty_rows = 0;
-
+		
 		int result = 0;
 		
+		boolean minimification_done = false;
+		
+		//Short circuit: if the max elements in both rows and columns is 0, then
+		//all the elements are zero. No further need to process.
+		if(rows.get(0) == 0 && columns.get(0) == 0) {
+			return result;
+		}
+		
+		//Short circuit: TODO evaluate this
+		if(row_count == column_count) {
+			if (rows.equals(columns)) 
+				return 0;
+		}
+		
+		int index = 0;
+		//Find the zero columns count.
+		for(index = (column_count - 1); index >= 0 ; index--) {
+			column =  columns.get(index);
+			if(column == 0) {
+				empty_columns++;
+			}else {
+				break;
+			}
+		}
+		
+		int max_row_sum_possible = column_count - empty_columns;
+		
+		//Now check the max column value
+		index = 0;
+		//Find the zero rows count.
+		for(index = (row_count - 1); index >= 0 ; index--) {
+			row =  rows.get(index);
+			if(row == 0) {
+				empty_rows++;
+			}else {
+				break;
+			}
+		}
+
+		int max_column_sum_possible = row_count - empty_rows;
+		
+		//NOTE: this change failed all the test cases
+		if(columns.get(0) > max_column_sum_possible) {
+			return -1;
+		}
+		
+		//Iterate over the rows and find all the full rows and remove them from the list 
 		ListIterator<Integer> rows_iterator =  rows.listIterator();
 		while(rows_iterator.hasNext()) {
 			row = rows_iterator.next();
 			
-			if (row == 0) {
-				empty_rows++;
-				rows_iterator.remove();
-			} else if (row == column_count) {
-				full_rows++;
-				rows_iterator.remove();
-			} else if (row < 0 || row > column_count) {
+			//If the row value is more than the permissible max value, then return with -1
+			if (row > max_row_sum_possible) {
 				result = -1;
 				break;
-			}			
+			} else if(row == max_row_sum_possible) {
+				//Delete the full row elements from the list and increment the full rows count.
+				full_rows++;
+				rows_iterator.remove();
+				minimification_done = true;
+			} else {
+				//If the current element is lesser than the column count 
+				break;
+			}
 		}
+
 		
-		// There was at least 1 full row, so we can reduce the column sum for each
-		// column
-		if ((full_rows > 0 || empty_rows > 0) && result != -1) {
-			
+		// There was at least 1 full row, so we need to reduce the column 
+		// sum for each column
+		if (full_rows > 0 && result == 0) {
 			ListIterator<Integer> columns_iterator = columns.listIterator();
 			
 			while(columns_iterator.hasNext()) {
 				column = columns_iterator.next();
-
-				column -= full_rows;
-
-				if (column < 0 || column > row_count) {
-					result = -1;
-					break;
-				} else if (column == 0) {
+				
+				//If this was a zero column, let's remove it.
+				if(column == 0) {
 					columns_iterator.remove();
-				}else
-					columns_iterator.set(column);
-			}			
+				}else {
+					//Decrement the value of each non-zero column to be in sync with the deleted full rows
+					column -= full_rows;
+	
+					if (column < 0) {
+						result = -1;
+						break;
+					} else {
+						columns_iterator.set(column);
+					}
+				}
+			}
 		}
 
-		if ((full_rows > 0 || empty_rows > 0) && result != -1) {
-			minimize(rows, columns);
+		if (minimification_done && result == 0) {
+			//result = minimize(rows, columns);
+			result = minimize(columns, rows);
 		}
 
 		return result;
