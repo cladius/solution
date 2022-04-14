@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * 10 score Semi Final 2
+ * Semi Final 2
  * 
  * @author cladius_fernando
  *
@@ -42,21 +42,60 @@ public class CandidateCode {
 	}
 
 	private static boolean processTestCase(int row_count, int column_count, String rows_string, String columns_string) {
+		
+		//Can expand function here to calculate sum and get list in just 1 iteration
+		/*
 		List<Integer> rows = stringToList(rows_string);
 		List<Integer> columns = stringToList(columns_string);
+		*/
+		
+		String[] numbers = rows_string.split(" ");
+		
+		List<Integer> rows = new ArrayList<Integer>();
+		
+		int index = 0;
+		int row = 0;
+		int row_sum = 0;
+		for(; index < row_count; index++) {
+			row = Integer.parseInt(numbers[index]);
+			if(row < 0 || row > column_count)
+				return false;
+			row_sum += row;
+			rows.add(row);
+		}
+		
+		Collections.sort(rows);
+		Collections.reverse(rows);
+		
+		
+		//Now for the columns
+		numbers = columns_string.split(" ");
+		
+		List<Integer> columns = new ArrayList<Integer>();
+		
+		index = 0;
+		int column = 0;
+		int column_sum = 0;
+		for(; index < column_count; index++) {
+			column = Integer.parseInt(numbers[index]);
+			if(column < 0 || column > row_count)
+				return false;
+			column_sum += column;
+			columns.add(column);
+		}
+		
+		if (row_sum != column_sum)
+			return false;
 
+		Collections.sort(columns);
+		Collections.reverse(columns);
+		
 		if (DEBUG) {
 			System.out.println(rows);
 			System.out.println(columns);
 		}
 
 		boolean possible = true;
-
-		possible = preliminaryValidation(row_count, column_count, rows, columns);
-
-		if (!possible) {
-			return false;
-		}
 
 		int minimize_result = 0;
 
