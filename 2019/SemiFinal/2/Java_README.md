@@ -65,7 +65,7 @@ Armed with this understanding let's dive into the solution - or rather I should 
 ## Evolution of the Solution
 So right off the bat, I figured that an easy way to figure out at least some of the NOs would be to add up all the column-summation values and compare that value with the sum of the row-summation values. If these 2 values differ then it's a straightforward NO. Reason being, that the total count of 1's in a matrix is going to remain the same, whether you add up the columns first or the rows. That was simple. Moving on.
 
-Please note that all of the different versions described below are part of this repo as [different versions of the same file](../../commits/master/SemiFinal2.java).
+Please note that all of the different versions described below are part of this repo as [different versions of the same file](../../../../../commits/master/2019/SemiFinal/2/CandidateCode.java).
 
 ### Version 1
 I created a function **preliminaryValidation** to take care of the above mentioned validation along with few other trivial ones like:
@@ -129,7 +129,7 @@ Collections.sort(rows, Collections.reverseOrder()); //Ooooh
 ```
 * Used a ListIterator
 
-I did modify some portion of the logic. For the life of me, I am not sure what made me make [these changes](../../commit/e62975a6887cec3994b516dfa3ec4cfe9bfc119d). But it increased my score by 30 points. Woohoo!
+I did modify some portion of the logic. For the life of me, I am not sure what made me make [these changes](../../../../../commit/4e8ab8aceddddf857a3c89d254ca40f18ac6779d). But it increased my score by 30 points. Woohoo!
 
 Submission Outcome: 40 points out of 100
 
