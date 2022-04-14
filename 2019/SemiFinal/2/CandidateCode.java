@@ -2,7 +2,8 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Score 0 -Semi Final 2
+ * Score 40 Semi Final 2
+ 2 Failures due to TLE
  * 
  * @author cladius_fernando
  *
@@ -88,14 +89,28 @@ public class CandidateCode {
 			System.out.println(rows);
 			System.out.println(columns);
 		}
-
-		int minimize_result = 0;
-
-		minimize_result = minimize(rows, columns);
-		// If minimize_result !=0, then some error has occurred.
-		if (minimize_result != 0) {
+		
+		int result = 0;
+		
+		result = preliminaryValidation(rows, columns, row_count, column_count);
+		
+		if(result != 0) {
+			result = preliminaryValidation(columns, rows, column_count, row_count);
+		}
+		
+		if(result == 0) {
+			return true;
+		}else {
 			return false;
 		}
+		
+		/*
+		
+		result = minimize(rows, columns);
+		// If minimize_result !=0, then some error has occurred.
+		if (result != 0) {
+			return false;
+		}*/
 
 		/*
 		// Transpose and minimize
@@ -105,7 +120,53 @@ public class CandidateCode {
 			return false;
 		}*/
 		
-		return true;
+//		return true;
+	}
+
+	private static int preliminaryValidation(List<Integer> rows, List<Integer> columns, int row_count, int column_count) {
+		int result = 0;
+		
+		int max_row = rows.get(0);
+		int min_row = rows.get(row_count - 1);
+		
+		int column;
+
+		int empty_columns = 0;
+		int full_columns = 0;
+		
+		int index = 0;
+
+		//Find the zero columns count.
+		for(index = (column_count - 1); index >= 0 ; index--) {
+			column =  columns.get(index);
+			if(column == 0) {
+				empty_columns++;
+			}else {
+				break;
+			}
+		}
+		
+		//Find the full columns count.
+		for(index = 0; index < column_count ; index++) {
+			column =  columns.get(index);
+			if(column == row_count) {
+				full_columns++;
+			}else {
+				break;
+			}
+		}
+		
+		int max_possible_row = column_count - empty_columns;
+		if(max_row > max_possible_row) {
+			return -1;
+		}
+		
+		int min_possible_row = full_columns;
+		if(min_row < min_possible_row) {
+			return -1;
+		}
+		
+		return result;
 	}
 
 	private static int minimize(List<Integer> rows, List<Integer> columns) {
