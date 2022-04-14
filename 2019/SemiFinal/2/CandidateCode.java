@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Semi Final 2
+ * Score 40 for Semi Final 2
  * 
  * @author cladius_fernando
  *
@@ -51,35 +51,30 @@ public class CandidateCode {
 		
 		String[] numbers = rows_string.split(" ");
 		
-		List<Integer> rows = new ArrayList<Integer>();
+		List<Integer> rows = new LinkedList<Integer>();
 		
 		int index = 0;
 		int row = 0;
 		int row_sum = 0;
 		for(; index < row_count; index++) {
 			row = Integer.parseInt(numbers[index]);
-			if(row < 0 || row > column_count)
-				return false;
 			row_sum += row;
 			rows.add(row);
 		}
 		
-		Collections.sort(rows);
-		Collections.reverse(rows);
-		
+		Collections.sort(rows, Collections.reverseOrder());
 		
 		//Now for the columns
+		//TODO use stringtokenizer
 		numbers = columns_string.split(" ");
 		
-		List<Integer> columns = new ArrayList<Integer>();
+		List<Integer> columns = new LinkedList<Integer>();
 		
 		index = 0;
 		int column = 0;
 		int column_sum = 0;
 		for(; index < column_count; index++) {
 			column = Integer.parseInt(numbers[index]);
-			if(column < 0 || column > row_count)
-				return false;
 			column_sum += column;
 			columns.add(column);
 		}
@@ -87,9 +82,8 @@ public class CandidateCode {
 		if (row_sum != column_sum)
 			return false;
 
-		Collections.sort(columns);
-		Collections.reverse(columns);
-		
+		Collections.sort(columns, Collections.reverseOrder());
+
 		if (DEBUG) {
 			System.out.println(rows);
 			System.out.println(columns);
@@ -111,38 +105,33 @@ public class CandidateCode {
 		if (minimize_result != 0) {
 			return false;
 		}
-
+		
 		//Solved owing to simplistic matrix
 		if (rows.size() == 0 || rows.size() == 1) {
 			return true;
 		}
 
+		/*
 		if (DEBUG)
 			System.out.println(rows.toString() + " , " + columns.toString());
 
-		// Fill up the rows
-		row_count = rows.size();
-		column_count = columns.size();
-		boolean matrix[][] = new boolean[row_count][column_count];
-
-		int row_index, column_index, row_sum;
-		for (row_index = 0; row_index < row_count; row_index++) {
-			row_sum = rows.get(row_index);
-			for (column_index = 0; column_index < column_count; column_index++) {
-				if (column_index >= row_sum) {
-					matrix[row_index][column_index] = false;
-				} else {
-					matrix[row_index][column_index] = true;
-				}
+		List<Integer> columnSums = new ArrayList<>(column_count);
+		
+		for(index = 0; index < column_count; index++) {
+			columnSums.add(row_count);
+		}
+		
+		int column_index, difference;
+		for(index = 0; index < row_count; index++) {
+			difference = column_count - rows.get(index);
+			column_index = 0;
+			
+			for(column_index = (column_count - difference); column_index < column_count; column_index++) {
+				columnSums.set(column_index, columnSums.get(column_index) - 1);
 			}
 		}
-
-		if (DEBUG)
-			printMatrix(matrix, row_count, column_count);
-
-		List<Integer> columnSums = calculateColumnSum(matrix, row_count, column_count);
-
-		if (DEBUG)
+		
+		if(DEBUG)
 			System.out.println(columnSums.toString());
 
 		// Check if the initial configuration matches the column count
@@ -159,8 +148,10 @@ public class CandidateCode {
 			// count
 			// shuffle();
 //				possible = false;
+ * 
+ * 
+ */
 		return true;
-
 	}
 
 	private static boolean compareDesiredAndActual(List<Integer> columns, List<Integer> columnSums, int row_count,
@@ -210,58 +201,54 @@ public class CandidateCode {
 	}
 
 	private static int minimize(List<Integer> rows, List<Integer> columns) {
-		int row_count = rows.size();
 		int column_count = columns.size();
-
+		int row_count = rows.size();
+		
 		if (DEBUG)
 			System.out.println("Min: " + rows.toString() + " , " + columns.toString());
 
-		int index = 0, row, column;
+		int row, column;
 
 		int full_rows = 0;
 		int empty_rows = 0;
 
 		int result = 0;
-
-		List<Integer> minimized_rows = new ArrayList<>();
-		List<Integer> minimized_columns = new ArrayList<>();
-
-		for (; index < row_count; index++) {
-			row = rows.get(index);
-			if (row == 0)
+		
+		ListIterator<Integer> rows_iterator =  rows.listIterator();
+		while(rows_iterator.hasNext()) {
+			row = rows_iterator.next();
+			
+			if (row == 0) {
 				empty_rows++;
-			else if (row == column_count)
+				rows_iterator.remove();
+			} else if (row == column_count) {
 				full_rows++;
-			else if (row < 0 || row > column_count) {
+				rows_iterator.remove();
+			} else if (row < 0 || row > column_count) {
 				result = -1;
 				break;
-			} else
-				minimized_rows.add(row);
+			}			
 		}
-
+		
 		// There was at least 1 full row, so we can reduce the column sum for each
 		// column
 		if ((full_rows > 0 || empty_rows > 0) && result != -1) {
-			for (index = 0; index < column_count; index++) {
-				column = columns.get(index);
+			
+			ListIterator<Integer> columns_iterator = columns.listIterator();
+			
+			while(columns_iterator.hasNext()) {
+				column = columns_iterator.next();
 
 				column -= full_rows;
 
 				if (column < 0 || column > row_count) {
 					result = -1;
 					break;
-				} else if (column > 0) {
-					minimized_columns.add(column);
-				}
-
-				columns.set(index, column);
-			}
-
-			rows.clear();
-			rows.addAll(minimized_rows);
-
-			columns.clear();
-			columns.addAll(minimized_columns);
+				} else if (column == 0) {
+					columns_iterator.remove();
+				}else
+					columns_iterator.set(column);
+			}			
 		}
 
 		if ((full_rows > 0 || empty_rows > 0) && result != -1) {
@@ -269,83 +256,6 @@ public class CandidateCode {
 		}
 
 		return result;
-	}
-
-	private static boolean preliminaryValidation(int row_count, int column_count, List<Integer> rows,
-			List<Integer> columns) {
-		int row_sum = 0; // calculateSum(rows);
-		int column_sum = 0; // calculateSum(columns);
-		int index = 0;
-		int row, column;
-
-		boolean isPossible = true;
-
-		for (; index < row_count; index++) {
-			row = rows.get(index);
-			row_sum += row;
-
-			if (row < 0 || row > column_count) {
-				isPossible = false;
-				break;
-			}
-		}
-
-		for (index = 0; isPossible && index < column_count; index++) {
-			column = columns.get(index);
-			column_sum += column;
-
-			if (column < 0 || column > row_count) {
-				isPossible = false;
-				break;
-			}
-		}
-
-		if (row_sum != column_sum)
-			isPossible = false;
-
-		return isPossible;
-	}
-
-	private static int calculateSum(List<Integer> items) {
-		int length = items.size();
-
-		int sum = 0;
-		for (int index = 0; index < length; index++) {
-			sum += items.get(index);
-		}
-
-		return sum;
-	}
-
-	private static List<Integer> stringToList(String input_string) {
-		String[] numbers = input_string.split(" ");
-		
-		int count = numbers.length;
-		List<Integer> list = new ArrayList<Integer>();
-		
-		int index = 0;
-		for(; index < count; index++) {
-			list.add(Integer.parseInt(numbers[index]));
-		}
-		
-		Collections.sort(list);
-		Collections.reverse(list);
-
-		return list;
-	}
-	
-	private static List<Integer> stringToListOld(String input_string) {
-		Scanner scanner = new Scanner(input_string);
-		List<Integer> list = new ArrayList<Integer>();
-		while (scanner.hasNextInt()) {
-			list.add(scanner.nextInt());
-		}
-
-		Collections.sort(list);
-		Collections.reverse(list);
-
-		scanner.close();
-		return list;
 	}
 
 }
