@@ -2,9 +2,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Semi Final 2 - Version 4 Score 50
- * 5 passed
- * 5 TLEs
+ * Semi Final 2 - Version 5 Score 70
  *
  * Used boolean array for visited nodes as opposed to Set of nodes
  *
