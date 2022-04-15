@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Semi Final 2 - Version 5 Score 70
+ * Semi Final 2 - Version 6 Score 100
  *
  * Used boolean array for visited nodes as opposed to Set of nodes
  *
@@ -65,9 +65,9 @@ public class Solution {
             numberOfHouses = parseInt(input[0]);
             int numberOfRoads = parseInt(input[1]);
 
-            roadCosts = new HashMap<>();
+            roadCosts = new HashMap<>(numberOfHouses);
             visitedNodes = new boolean[numberOfHouses];
-            rootHouseNeighbors = new PriorityQueue<>(new EdgeComparator()); //Need to create with some initialCapacity?
+            rootHouseNeighbors = new PriorityQueue<>(numberOfHouses, new EdgeComparator()); //Need to create with some initialCapacity?
 
             for(int i = 0; i < numberOfRoads; i++) {
                 input = reader.readLine().split(" ");
@@ -156,12 +156,16 @@ public class Solution {
          * If cost(root, houseIndex) + cost (houseIndex, otherHouse) < cost(root, otherHouse) => set new min cost
          *
          */
-        for(int j = 0; j < numberOfHouses; j++){
+
+        Map<Integer, Integer> roadsFromHouseBeingVisited = roadCosts.get(houseIndex);
+        for (Map.Entry<Integer, Integer> road:
+             roadsFromHouseBeingVisited.entrySet()) {
+            int j = road.getKey();
             //If other house is already visited - skip
             if(visitedNodes[j])
                 continue;
 
-            costFromThisHouseToOtherHouse = getRoadCost(houseIndex, j);
+            costFromThisHouseToOtherHouse = road.getValue();
 
             //If there is no route from this house to the other house
             if(costFromThisHouseToOtherHouse == 0)
