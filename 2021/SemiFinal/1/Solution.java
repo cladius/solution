@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 /**
- * Semi Final 1 - Version 1 Score 30 - All failures TLE after changing int to long
+ * Semi Final 1 - Version 2 Score 80 - TLEs went away - but 2 mismatch failures
  * 
  * @author cladius_fernando
  *
@@ -62,17 +62,18 @@ public class Solution {
 	private static List<Long> getDivisors(long number) {
 		List<Long> divisors = new ArrayList<>();
 
-		long halfLimit = number/2 + 1;
+		long maxLimit = number/2 + 1;
 		long divisor = 2;
 		
-		for(; divisor < halfLimit; ) {
+		for(; divisor <= maxLimit; ) {
 			//If the number is divisible then divide and reset the var
 			if(number % divisor == 0 && number != divisor) {
 				divisors.add(divisor);
 				number = number / divisor;
-				halfLimit = number / 2 + 1;
+				maxLimit = number / divisor;
 			}else {
 				divisor++;
+				maxLimit = number / divisor;
 			}
 		}
 		
