@@ -25,22 +25,24 @@ The minister was baffled with this and directed the faulty contractors to mend i
 
 Suppose there are 10 Hospitals and there are 10 roads between them. Each hospital should be reachable from the supply point (Hospital number 1) by following atmost 3 roads.
 
-  
+<img width="900" alt="1" src="https://user-images.githubusercontent.com/11571484/180421780-ca3e81f5-7bf7-4b0d-be03-68eff00b2bee.png">
+
 
 ### Projects Drawbacks:
 1.	In this project, it is not possible to reach Hospital number 5, 6, 9 and 10 from Oxygen supply point (Hospital number 1).
 2.	To reach Hospital number 7 and 8 from Oxygen supply point (Hospital number 1), it takes more than 3 roads. 
 
 **Path from Hospital 1 to Hospital 7: H1 -> H2 -> H3 -> H4 -> H7**
+<img width="900" alt="2" src="https://user-images.githubusercontent.com/11571484/180423331-3a14ffa6-af8e-4377-928f-97996f8cf505.png">
 
- 
- 
+
 
 Number of roads taken is 4 which is greater than the maximum limit of 3.
 
 **Path from Hospital 1 to Hospital 8: H1 -> H2 -> H3 -> H4 -> H7 -> H8**
+<img width="900" alt="3" src="https://user-images.githubusercontent.com/11571484/180423382-1bfcd5b1-49fb-49f8-bfe1-5fd9e52a51ad.png">
 
- 
+
 
 Number of roads taken is 5 which is greater than the maximum limit of 3.
 
@@ -53,6 +55,8 @@ One such possible valid solution is:
 3.	Construct another Road from Hospital number 1 to Hospital number 5. This makes Hospital number 5 and Hospital number 7 to be reachable from Oxygen supply point (Hospital number 1) within the maximum road use limit 3.
 
 Constructing 3 roads this way takes care of the project drawbacks and makes it as per the guidelines issued for the project.
+
+<img width="900" alt="4" src="https://user-images.githubusercontent.com/11571484/180423498-7a8ebea6-6226-4ee5-a3c4-aa5fd88c2ecc.png">
 
  
 
