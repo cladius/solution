@@ -1,3 +1,7 @@
+/**
+ * Solution score: 100/100
+ */
+
 data class TestCase(
     val giftsToBuy: Int,
     val giftsAvailable: Int,

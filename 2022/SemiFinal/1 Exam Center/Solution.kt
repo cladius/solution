@@ -1,3 +1,7 @@
+/**
+ * Solution score: 100/100
+ */
+
 fun main() {
     val sequenceNumber = readLine()!!.toInt()
     println(getRoomNumber(sequenceNumber))
