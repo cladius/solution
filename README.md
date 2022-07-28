@@ -20,7 +20,7 @@ Do NOT lose your honor
 Fork the repo, make your changes, raise a PR.
 What kind of changes are welcome?
  - Missing Questions
- - Missing Solutions
- - Explain the evolution of your solution
+ - Missing Solutions (Mention Score in a comment within the solution. If you weren't able to get an official score, mention **Untested** or **??**.)
+ - Explain the evolution of your solution (Optional)
  - Alternate Solutions using a different technique or language
  - Typo corrections
