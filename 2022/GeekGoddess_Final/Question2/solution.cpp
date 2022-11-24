@@ -2,6 +2,11 @@
 #include <bits/stdc++.h>
 using namespace std; 
 
+/*
+    AUTHOR : ANJALI RATHORE 
+    SCORE : 100/100
+*/
+
 int visit[100005]={0}; 
 vector<int> gr[100005]; 
 

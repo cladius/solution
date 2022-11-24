@@ -3,8 +3,9 @@
 using namespace std;
 
 /*
+    AUTHOR : VAISHNAVI BHAVAGNA KANCHARLA
     SCORE : 100/100
-    
+
     Approach :- To find a control room which is min distance from all the points
     we need to find median of array. We will maintain vector of 'n' size and we keep
     sorting the array. Once array is sorted we find median as per below conditions:-
