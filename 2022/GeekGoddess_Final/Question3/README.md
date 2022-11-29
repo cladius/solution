@@ -59,10 +59,12 @@ For each test case, print the required output.
 #### Explanation
 
 Nth number consisting of odd digits
+```
 1 - 1
 2 - 3
 3 - 5
 4 - 7
 5 - 9
 6 - 11
+```
 and so on.....
